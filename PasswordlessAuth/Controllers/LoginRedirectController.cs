@@ -28,7 +28,7 @@ namespace PasswordlessAuth.Controllers
             var user = await _userManager.FindByEmailAsync(email);
             var isValid = await _userManager.VerifyUserTokenAsync(user, "Default", "passwordless-auth", token);
 
-            if (isValid) 
+            if (!isValid) 
             {
                 await _userManager.UpdateSecurityStampAsync(user);
 
