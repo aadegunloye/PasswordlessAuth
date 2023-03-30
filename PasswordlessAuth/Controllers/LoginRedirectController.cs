@@ -25,10 +25,11 @@ namespace PasswordlessAuth.Controllers
         [HttpGet]
         public async Task<IActionResult> Login(string token, string email, string returnUrl)
         {
+            // initialise asp.net core identity parameters
             var user = await _userManager.FindByEmailAsync(email);
             var isValid = await _userManager.VerifyUserTokenAsync(user, "Default", "passwordless-auth", token);
 
-            if (!isValid) 
+            if (isValid) 
             {
                 await _userManager.UpdateSecurityStampAsync(user);
 
